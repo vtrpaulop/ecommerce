@@ -4,44 +4,49 @@ namespace Hcode;
 
 use Rain\Tpl;
 
-class Page {
+class Page
+{
 
     private $tpl;
     private $options = [];
-    private $default = ["data"=>[]];
+    private $default = ["data" => []];
 
-    public function __construct($opts = array()) {
+    public function __construct($opts = array())
+    {
 
         $this->options = array_merge($this->default, $opts);
 
         // config
-	    $config = array(
-        "tpl_dir"       => $_SERVER["DOCUMENT_ROOT"] . "/views/",
-        "cache_dir"     => $_SERVER["DOCUMENT_ROOT"] . "/views-cache/",
-        "debug"         => false // set to false to improve the speed
-       );
+        $config = array(
+            "tpl_dir" => $_SERVER["DOCUMENT_ROOT"] . "/views/",
+            "cache_dir" => $_SERVER["DOCUMENT_ROOT"] . "/views-cache/",
+            "debug" => false // set to false to improve the speed
+        );
 
-Tpl::configure( $config );
-       
-$this->tpl = new Tpl;
-$this->setData($this->options["data"]);
-$this->tpl->draw("header");
-}
+        Tpl::configure($config);
 
-private function setData($data = array()) {
-    foreach ($data as $key => $value) {
-        $this->tpl->assign($key, $value);   
+        $this->tpl = new Tpl;
+        $this->setData($this->options["data"]);
+        $this->tpl->draw("header");
     }
-    
-}
-    public function setTpl($name, $data = array(), $returnHTML = false) {
+
+    private function setData($data = array())
+    {
+        foreach ($data as $key => $value) {
+            $this->tpl->assign($key, $value);
+        }
+
+    }
+    public function setTpl($name, $data = array(), $returnHTML = false)
+    {
 
         $this->setData($data);
 
-       return $this->tpl->draw($name, $returnHTML);
-        }
-    
-    public function __destruct() {
+        return $this->tpl->draw($name, $returnHTML);
+    }
+
+    public function __destruct()
+    {
 
         $this->tpl->draw("footer");
 
@@ -49,5 +54,5 @@ private function setData($data = array()) {
 
     }
 
- }
+}
 ?>
